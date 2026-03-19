@@ -1,4 +1,4 @@
-# app.py
+from pathlib import Path
 from flask import Flask, request, jsonify
 import pickle
 import numpy as np
@@ -6,33 +6,41 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# Load trained model
-model = pickle.load(open("model.pkl", "rb"))
+BASE_DIR = Path(__file__).resolve().parent
 
-# 🔥 IMPORTANT: Load location encoding (same as training)
-location_mean = pickle.load(open("location_mean.pkl", "rb"))
+model = pickle.load(open(BASE_DIR / "model.pkl", "rb"))
+location_mean = pickle.load(open(BASE_DIR / "location_mean.pkl", "rb"))
 
-# ----------- Helper Functions -----------
+FINAL_COLS = [
+    "area_sqft",
+    "bhk",
+    "bathroom",
+    "parking",
+    "furnishing_Semi-Furnished",
+    "furnishing_Unfurnished",
+    "location_encoded"
+]
+
 
 def preprocess_input(data):
-    df = pd.DataFrame([data])
+    df = pd.DataFrame([
+        {
+            "area_sqft": data["area_sqft"],
+            "bhk": data["bhk"],
+            "bathroom": data["bathrooms"],
+            "parking": data["parking"],
+            "location": data["location"]
+        }
+    ])
 
-    # Encode location using target encoding
     df["location_encoded"] = df["location"].map(location_mean)
+    df["location_encoded"] = df["location_encoded"].fillna(float(np.mean(location_mean)))
     df.drop("location", axis=1, inplace=True)
 
-    # One-hot encoding for furnishing (ensure same columns)
-    furnishing_cols = ["furnishing_Semi-Furnished", "furnishing_Unfurnished"]
+    df["furnishing_Semi-Furnished"] = 1 if data["furnishing"] == "Semi-Furnished" else 0
+    df["furnishing_Unfurnished"] = 1 if data["furnishing"] == "Unfurnished" else 0
 
-    for col in furnishing_cols:
-        df[col] = 0
-
-    if data["furnishing"] == "Semi-Furnished":
-        df["furnishing_Semi-Furnished"] = 1
-    elif data["furnishing"] == "Unfurnished":
-        df["furnishing_Unfurnished"] = 1
-
-    df.drop("furnishing", axis=1, inplace=True)
+    df = df.reindex(columns=FINAL_COLS, fill_value=0)
 
     return df
 
@@ -40,56 +48,47 @@ def preprocess_input(data):
 def predict_price(input_df):
     pred_log = model.predict(input_df)[0]
     price = np.exp(pred_log)
-
-    # Simple uncertainty range
-    std = price * 0.1
-    lower = price - std
-    upper = price + std
-
+    lower = price * 0.9
+    upper = price * 1.1
     return price, lower, upper
 
 
 def get_recommendation(price, location):
     avg_price = location_mean.get(location, price)
-
     if price < avg_price:
         return "Good Deal"
-    else:
-        return "Overpriced"
+    return "Overpriced"
 
-
-# ----------- API Routes -----------
 
 @app.route("/")
 def home():
-    return "House Price Prediction API Running 🚀"
+    return "House Price Prediction API Running"
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        data = request.json
+        data = request.json or {}
+        required_fields = ["area_sqft", "bhk", "bathrooms", "parking", "location", "furnishing"]
+        missing = [field for field in required_fields if field not in data]
+        if missing:
+            return jsonify({"error": f"Missing required fields: {', '.join(missing)}"}), 400
 
-        # Preprocess
         input_df = preprocess_input(data)
-
-        # Prediction
         price, lower, upper = predict_price(input_df)
-
-        # Recommendation
         recommendation = get_recommendation(price, data["location"])
 
-        return jsonify({
-            "predicted_price": round(price, 2),
-            "price_range": [round(lower, 2), round(upper, 2)],
-            "recommendation": recommendation
-        })
+        return jsonify(
+            {
+                "predicted_price": round(float(price), 2),
+                "price_range": [round(float(lower), 2), round(float(upper), 2)],
+                "recommendation": recommendation
+            }
+        )
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": str(e)}), 500
 
-
-# ----------- Run App -----------
 
 if __name__ == "__main__":
     app.run(debug=True)
