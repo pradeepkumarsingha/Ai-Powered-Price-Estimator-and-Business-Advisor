@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Real Estate Advisor</title>
+    <style>
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 233, 0.22), transparent 30%),
+          radial-gradient(circle at top right, rgba(249, 115, 22, 0.18), transparent 28%),
+          linear-gradient(180deg, #020617 0%, #0f172a 100%);
+        min-height: 100vh;
+      }
+
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        color: #e2e8f0;
+        font-family: Manrope, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 233, 0.18), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.14), transparent 28%),
+          linear-gradient(180deg, #020617 0%, #0f172a 100%);
+        z-index: 9999;
+        transition: opacity 220ms ease, visibility 220ms ease;
+      }
+
+      #app-loader.app-loader-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .app-loader-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 68px;
+        height: 68px;
+        border-radius: 22px;
+        border: 1px solid rgba(56, 189, 248, 0.24);
+        background: rgba(15, 23, 42, 0.72);
+        box-shadow: 0 20px 60px rgba(14, 165, 233, 0.18);
+        font-size: 28px;
+      }
+
+      .app-loader-spin {
+        width: 42px;
+        height: 42px;
+        border-radius: 9999px;
+        border: 3px solid rgba(100, 116, 139, 0.4);
+        border-top-color: #38bdf8;
+        animation: app-spin 0.9s linear infinite;
+      }
+
+      .app-loader-title {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .app-loader-subtitle {
+        font-size: 14px;
+        color: #94a3b8;
+      }
+
+      @keyframes app-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-loader" aria-live="polite">
+      <div class="app-loader-mark">??</div>
+      <div class="app-loader-spin"></div>
+      <div class="app-loader-title">EstateAI</div>
+      <div class="app-loader-subtitle">Loading your workspace...</div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

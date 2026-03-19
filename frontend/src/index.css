@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 font-body text-slate-100 antialiased;
+    background-image: theme("backgroundImage.mesh");
+    min-height: 100vh;
+  }
+
+  * {
+    @apply border-slate-800;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-3xl border border-slate-800/80 bg-slate-900/70 shadow-glow backdrop-blur;
+    animation: rise-in 0.7s ease-out both;
+  }
+
+  .panel-muted {
+    @apply rounded-2xl border border-slate-800/70 bg-slate-900/50 backdrop-blur;
+  }
+
+  .label {
+    @apply mb-2 block text-sm font-semibold text-slate-300;
+  }
+
+  .input {
+    @apply w-full rounded-2xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-slate-100 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
