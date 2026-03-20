@@ -1,0 +1,37 @@
+name: Docker CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Get code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2️⃣ Setup Docker
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    # 3️⃣ Login to DockerHub
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # 4️⃣ Build & Push Backend + Frontend (combined)
+    - name: Build & Push App Image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-fullstack-app .
+        docker push ${{ secrets.DOCKER_USERNAME }}/ai-fullstack-app
+
+    # 5️⃣ Build & Push ML Model
+    - name: Build & Push ML Image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-ml ./models
+        docker push ${{ secrets.DOCKER_USERNAME }}/ai-ml

@@ -28,3 +28,92 @@ This project turns an existing Flask-based property valuation model into a full 
 ## Existing Flask model
 
 The existing Flask service should keep running separately and expose `POST /predict` on `http://localhost:5000/predict`.
+
+```
+Ai Powered Price Estimator and Business Advisor
+├─ backend
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ server.js
+│  └─ src
+│     ├─ app.js
+│     ├─ config
+│     │  ├─ db.js
+│     │  └─ env.js
+│     ├─ constants
+│     │  └─ propertyOptions.js
+│     ├─ controllers
+│     │  ├─ authController.js
+│     │  └─ predictionController.js
+│     ├─ middleware
+│     │  ├─ authMiddleware.js
+│     │  └─ errorMiddleware.js
+│     ├─ models
+│     │  ├─ Prediction.js
+│     │  └─ User.js
+│     ├─ routes
+│     │  ├─ authRoutes.js
+│     │  └─ predictionRoutes.js
+│     ├─ services
+│     │  ├─ flaskService.js
+│     │  └─ predictionService.js
+│     └─ utils
+│        └─ generateToken.js
+├─ frontend
+│  ├─ index.html
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ postcss.config.js
+│  ├─ src
+│  │  ├─ api
+│  │  │  ├─ auth.js
+│  │  │  ├─ client.js
+│  │  │  └─ predictions.js
+│  │  ├─ App.jsx
+│  │  ├─ components
+│  │  │  ├─ auth
+│  │  │  │  ├─ AuthCard.jsx
+│  │  │  │  ├─ GoogleAuthButton.jsx
+│  │  │  │  └─ ProtectedRoute.jsx
+│  │  │  ├─ common
+│  │  │  │  ├─ LoadingSpinner.jsx
+│  │  │  │  ├─ RecommendationBadge.jsx
+│  │  │  │  ├─ SectionHeader.jsx
+│  │  │  │  └─ StatCard.jsx
+│  │  │  ├─ dashboard
+│  │  │  │  └─ ChartCard.jsx
+│  │  │  ├─ home
+│  │  │  │  └─ HeroScene.jsx
+│  │  │  ├─ layout
+│  │  │  │  └─ AppShell.jsx
+│  │  │  └─ prediction
+│  │  │     ├─ PredictionForm.jsx
+│  │  │     └─ PredictionResultCard.jsx
+│  │  ├─ constants
+│  │  │  └─ propertyOptions.js
+│  │  ├─ context
+│  │  │  └─ AuthContext.jsx
+│  │  ├─ hooks
+│  │  │  ├─ useAuth.js
+│  │  │  └─ usePredictionForm.js
+│  │  ├─ index.css
+│  │  ├─ main.jsx
+│  │  ├─ pages
+│  │  │  ├─ AboutPage.jsx
+│  │  │  ├─ DashboardPage.jsx
+│  │  │  ├─ HistoryPage.jsx
+│  │  │  ├─ HomePage.jsx
+│  │  │  ├─ LoginPage.jsx
+│  │  │  ├─ PredictionPage.jsx
+│  │  │  └─ RegisterPage.jsx
+│  │  └─ utils
+│  │     └─ logo.png
+│  ├─ tailwind.config.js
+│  └─ vite.config.js
+├─ models
+│  ├─ app.py
+│  ├─ requirements.txt
+│  └─ streamlit.py
+└─ README.md
+
+```
