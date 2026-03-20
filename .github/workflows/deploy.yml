@@ -28,7 +28,7 @@ jobs:
 
     - name: Build & Push ML Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-ml:latest ./models
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-ml:latest ./mod els
         docker push ${{ secrets.DOCKER_USERNAME }}/ai-ml:latest
 
     - name: Debug Docker Login
