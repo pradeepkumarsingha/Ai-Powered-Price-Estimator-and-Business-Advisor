@@ -30,3 +30,6 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-ml:latest ./models
         docker push ${{ secrets.DOCKER_USERNAME }}/ai-ml:latest
+
+    - name: Debug Docker Login
+        run: echo "Username: ${{ secrets.DOCKER_USERNAME }}"
