@@ -23,7 +23,7 @@ jobs:
 
     - name: Build & Push App Image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-fullstack:latest .
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/ai-fullstack-app:latest .
         docker push ${{ secrets.DOCKER_USERNAME }}/ai-fullstack-app:latest
 
     - name: Build & Push ML Image
