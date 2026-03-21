@@ -20,7 +20,7 @@ export const requestFlaskPrediction = async (payload) => {
     headers: {
       "Content-Type": "application/json"
     },
-    timeout: 15000
+    timeout: 30000
   }
 );
 

@@ -14,7 +14,7 @@ const normalizeEnvValue = (value, fallback = "") => {
 export const env = {
   port: Number(normalizeEnvValue(process.env.PORT, 8000)),
   mongoUri: normalizeEnvValue(process.env.MONGO_URI, "mongodb://127.0.0.1:27017/real-estate-advisor"),
-  flaskApiUrl: normalizeEnvValue(process.env.FLASK_API_URL, "http://localhost:5000/predict"),
+  flaskApiUrl: normalizeEnvValue(process.env.FLASK_API_URL, "http://localhost:5000"),
   clientUrl: normalizeEnvValue(process.env.CLIENT_URL, "http://localhost:5173"),
   jwtSecret: normalizeEnvValue(process.env.JWT_SECRET, "change-me-in-production"),
   jwtExpiresIn: normalizeEnvValue(process.env.JWT_EXPIRES_IN, "7d"),
