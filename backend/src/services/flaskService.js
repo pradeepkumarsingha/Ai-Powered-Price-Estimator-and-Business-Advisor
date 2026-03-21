@@ -11,18 +11,34 @@ const isValidPredictionResponse = (data) => {
   );
 };
 
+// export const requestFlaskPrediction = async (payload) => {
+//   try {
+//    const { data } = await axios.post(
+//   `${env.flaskApiUrl}`,
+//   payload,
+//   {
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     timeout: 30000
+//   }
+// );
 export const requestFlaskPrediction = async (payload) => {
   try {
-   const { data } = await axios.post(
-  `${env.flaskApiUrl}`,
-  payload,
-  {
-    headers: {
-      "Content-Type": "application/json"
-    },
-    timeout: 30000
+    console.log("Sending payload to Flask:", payload); // Debug 1
+    
+    
+    console.log("Received data from Flask:", data); // Debug 2 - LOOK AT THIS IN RENDER LOGS
+    const { data } = await axios.post(env.flaskApiUrl, payload, {
+    headers: { "Content-Type": "application/json" },
+    timeout: 60000 // Increased to 60s for Render Free Tier
+});
+    // ... rest of your code
+  } catch (error) {
+    console.error("Axios Error:", error.message); // Debug 3
+    // ...
   }
-);
+};
 
     if (data?.error) {
       const error = new Error(`Flask prediction failed: ${data.error}`);
