@@ -15,8 +15,7 @@ const app = express();
   // })
   const allowedOrigins = [
   "http://localhost:5173",
-  "https://ai-frontend-m6dx.onrender.com",
-  "https://ai-powered-price-estimator-and-busi.vercel.app/"
+  "https://ai-powered-price-estimator-and-busi.vercel.app"
 ];
 
 app.use(
