@@ -13,12 +13,16 @@ const isValidPredictionResponse = (data) => {
 
 export const requestFlaskPrediction = async (payload) => {
   try {
-    const { data } = await axios.post(env.flaskApiUrl, payload, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      timeout: 15000
-    });
+   const { data } = await axios.post(
+  `${env.flaskApiUrl}/predict`,
+  payload,
+  {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    timeout: 15000
+  }
+);
 
     if (data?.error) {
       const error = new Error(`Flask prediction failed: ${data.error}`);

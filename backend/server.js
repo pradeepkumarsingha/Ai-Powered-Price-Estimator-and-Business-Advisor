@@ -6,9 +6,11 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    app.listen(env.port, () => {
-      console.log(`Backend running on http://localhost:${env.port}`);
-    });
+   const PORT = process.env.PORT || env.port || 5000;
+
+  app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Backend running on port ${PORT}`);
+});
   } catch (error) {
     console.error("Failed to start backend:", error.message);
     process.exit(1);
