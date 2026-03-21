@@ -14,7 +14,7 @@ const isValidPredictionResponse = (data) => {
 export const requestFlaskPrediction = async (payload) => {
   try {
    const { data } = await axios.post(
-  `${env.flaskApiUrl}/predict`,
+  `${env.flaskApiUrl}`,
   payload,
   {
     headers: {
