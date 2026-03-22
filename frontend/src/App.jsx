@@ -8,8 +8,22 @@ import HistoryPage from "./pages/HistoryPage";
 import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import React, { useEffect } from "react"; // Added useEffect here
+import axios from "axios";
 
 const App = () => {
+  useEffect(() => {
+  // As soon as the user opens the website, send a "Wake Up" call to Flask
+  const wakeUp = async () => {
+    try {
+      await axios.get('https://ai-backend-ddcq.onrender.com/health');
+      console.log("Flask is waking up in the background...");
+    } catch (e) {
+      console.log("Waking up...");
+    }
+  };
+  wakeUp();
+}, []);
   return (
     <AppShell>
       <Routes>
