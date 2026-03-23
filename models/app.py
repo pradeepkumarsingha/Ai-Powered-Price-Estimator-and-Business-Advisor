@@ -1,5 +1,6 @@
 from pathlib import Path
 from flask import Flask, request, jsonify
+import joblib
 import pickle
 import numpy as np
 import pandas as pd
@@ -8,8 +9,10 @@ app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 
-model = pickle.load(open(BASE_DIR / "model.pkl", "rb"))
-location_mean = pickle.load(open(BASE_DIR / "location_mean.pkl", "rb"))
+# model = pickle.load(open(BASE_DIR / "model.pkl", "rb"))
+# location_mean = pickle.load(open(BASE_DIR / "location_mean.pkl", "rb"))
+model = joblib.load(BASE_DIR / "model.pkl")
+location_mean = joblib.load(BASE_DIR / "location_mean.pkl")
 
 FINAL_COLS = [
     "area_sqft",
