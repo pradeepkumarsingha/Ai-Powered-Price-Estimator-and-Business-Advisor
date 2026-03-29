@@ -19,8 +19,7 @@ export const requestFlaskPrediction = async (payload) => {
     const { data } = await axios.post(env.flaskApiUrl, payload, {
       headers: { 
         "Content-Type": "application/json" 
-      },
-      timeout: 90000 // 60s timeout for Render Free Tier cold starts
+      } // 60s timeout for Render Free Tier cold starts
     });
 
     console.log("Received data from Flask:", data);
