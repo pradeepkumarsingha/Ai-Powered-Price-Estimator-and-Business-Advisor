@@ -20,7 +20,7 @@ export const requestFlaskPrediction = async (payload) => {
       headers: { 
         "Content-Type": "application/json" 
       } // 60s timeout for Render Free Tier cold starts
-    }, { timeout: 60000 })  ;
+    }, { timeout: 120000 })  ;
     
 
     console.log("Received data from Flask:", data);
